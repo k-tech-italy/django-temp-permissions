@@ -8,73 +8,79 @@ classDiagram
     
     class BaseTemporaryPermission {
         <<abstract>>
-        datetime start_datetime
-        datetime end_datetime
-        text notes
+        start_datetime: datetime
+        end_datetime: datetime
+        notes: text[0..1]
     }
     BaseTemporaryPermission "N" --> "N" Permission
     
     class User {
         <<abstract>>
-        string first_name
-        string last_name
+        first_name: string
+        last_name: string
     }
     
     class Group {
-        string name
+        name: string
     }
     
     class TemporaryPermissionManager {
         <<interface>>
-        + get_active_permissions(User)
+        + get_active_permissions(): list[Permission]
+        + 
     }
     
-    class UserTemporaryPermission 
-    UserTemporaryPermission --* User
+    class UserTemporaryPermission {
+        <<Model>>
+    }
+    UserTemporaryPermission --> User
     BaseTemporaryPermission <|-- UserTemporaryPermission
     
-    class GroupTemporaryPermission
-    GroupTemporaryPermission --* Group
+    class GroupTemporaryPermission {
+        <<Model>>
+    }
+    GroupTemporaryPermission --> Group
     BaseTemporaryPermission <|-- GroupTemporaryPermission
     
     class UserTemporaryPermissionManager {
-        + get_active_permissions(User user)
+        <<Manager>>
+        + get_active_permissions(User user): list[Permission]
+        + with_perm(Permission permission): list[User]
     }
-    UserTemporaryPermission --o UserTemporaryPermissionManager
+    UserTemporaryPermission <-- UserTemporaryPermissionManager
     TemporaryPermissionManager <|-- UserTemporaryPermissionManager
     
     class GroupTemporaryPermissionManager {
-        + get_active_permissions(Group group)
+        <<Manager>>
+        + get_active_permissions(Group group): list[Permission]
     }
-    GroupTemporaryPermission --o GroupTemporaryPermissionManager
+    GroupTemporaryPermission <-- GroupTemporaryPermissionManager
     TemporaryPermissionManager <|-- GroupTemporaryPermissionManager
 ```
 
 # Authentication backend
 ```mermaid
 classDiagram
-    class BaseBackend {
-        <<abstract>>
-        string name
-    }
+    class ModelBackend
     
     class TemporaryPermissionBackend {
-        + get_user_permissions()
-        + get_group_permissions()
-        + get_all_permissions()
-        + has_perm()
-        + has_module_perms()
-        + with_perm()
+        + get_user_permissions(): list[Permission]
+        + get_group_permissions(): list[Permission]
+        + get_all_permissions(): list[Permission]
+        + has_perm(): bool
+        + has_module_perms(): bool
+        + with_perm(Permission permission): list[User]
     }
-    BaseBackend <|-- TemporaryPermissionBackend
+    ModelBackend <|-- TemporaryPermissionBackend
     
     class UserTemporaryPermissionManager {
-        + get_active_permissions(User user)
+        + get_active_permissions(User user): list[Permission]
+        + with_perm(Permission permission): list[User]
     }
-    TemporaryPermissionBackend --o UserTemporaryPermissionManager
+    TemporaryPermissionBackend --> UserTemporaryPermissionManager
     
     class GroupTemporaryPermissionManager {
-        + get_active_permissions(Group group)
+        + get_active_permissions(Group group): list[Permission]
     }
-    TemporaryPermissionBackend --o GroupTemporaryPermissionManager
+    TemporaryPermissionBackend --> GroupTemporaryPermissionManager
 ```
