@@ -1,0 +1,137 @@
+# Azure Pipeline
+# Builds docker image and release to DEV
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - 'master'
+  paths:
+    exclude:
+      - docs/*
+      - '*.md'
+
+variables:
+- group: adp-test-variables
+- name: DATABASE_URL
+  value: postgres://postgres:test@localhost:5432/test
+
+resources:
+  containers:
+  - container: postgres
+    image: postgres:16
+    env:
+       POSTGRES_PASSWORD: test
+       POSTGRES_HOST_AUTH_METHOD: trust
+       PGDATA: /var/lib/postgresql/data
+    ports:
+       - 5432:5432/tcp
+
+services:
+  postgres: postgres
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+      versionSpec: '3.13'
+      architecture: 'x64'
+
+- script: |
+    mkdir -p /tmp/django_temporary_permissions/media/invites
+    mkdir -p /tmp/django_temporary_permissions/media/tmp
+    sudo apt-get install -y libssl-dev
+  displayName: 'Install os dependencies'
+
+
+- script: |
+    pip3 install --upgrade pip wheel poetry
+    poetry config virtualenvs.create false
+  displayName: 'sdist'
+
+- bash: |
+    poetry build -f sdist
+    poetry export --with-credentials --without-hashes -f requirements.txt > dist/requirements.txt
+  displayName: 'building package'
+
+- script: |
+    poetry install -vv
+  displayName: 'Install dependencies and package'
+
+- script: |
+    python -m py.test tests --create-db --junitxml=pytest.xml -vv \
+        --cov-report=xml --cov-report=html --cov-report=term \
+        --cov-config=tests/.coveragerc \
+        --cov=django_temporary_permissions
+  env:
+    DATABASE_URL: $(DATABASE_URL)
+  displayName: 'Run tests'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: "pytest.xml"
+    testResultsFormat: 'JUnit'
+    testRunTitle: 'Test with Python $(PYTHON_VERSION)'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/pytest.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/~build/coverage'
+    searchFolder: '$(system.defaultworkingdirectory)/tests'
+
+- bash: |
+    echo "##vso[task.setvariable variable=VERSION]"`grep "^VERSION=" docker/Makefile | cut -d "=" -f 2`
+  displayName: 'Finding version number'
+
+#- bash: |
+#    sed 's/ONBUILD //g' docker/Dockerfile.onbuild  > docker/Dockerfile.full
+#    cat docker/Dockerfile.full
+#  displayName: 'Generating Dockerfile.full'
+
+- bash: |
+      docker build \
+      --build-arg CONTAINER_NAME=$(CONTAINER_NAME) \
+      --build-arg VERSION=$(VERSION) \
+      -t kt-demo:$VERSION \
+      -t kt-demo:latest \
+      -f docker/Dockerfile .
+  displayName: 'Build image'
+
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'dev-adp-aws'
+    regionName: 'eu-west-1'
+    imageSource: 'imagename'
+    sourceImageName: 'kt-demo'
+    repositoryName: 'kt-demo'
+    logRequest: true
+    logResponse: true
+
+
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'dev-adp-aws'
+    regionName: 'eu-west-1'
+    imageSource: 'imagename'
+    sourceImageName: 'kt-demo'
+    sourceImageTag: '$(VERSION)'
+    repositoryName: 'kt-demo'
+    pushTag: '$(VERSION)'
+    logRequest: true
+    logResponse: true
+
+- bash: |
+      python devops/scripts/redeploy.py \
+      --cluster=django_temporary_permissions-dev-ecs-cluster \
+      --tag latest \
+      --family=dev-django_temporary_permissions-web_app-taskdefinition \
+      --service=dev-django_temporary_permissions-web_app-service
+  env:
+    AWS_REGION: eu-west-1
+    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+  displayName: 'Redeploy'

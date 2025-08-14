@@ -1,0 +1,12 @@
+- model: core.exampleDimension1
+  pk: 1
+  fields:
+    updated_by: ''
+    update_ts: 2021-05-18 15:21:34.398881+00:00
+    name: Test1
+- model: core.exampleDimension1
+  pk: 1
+  fields:
+    updated_by: ''
+    update_ts: 2021-05-18 15:21:34.398881+00:00
+    name: Test2

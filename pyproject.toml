@@ -1,0 +1,74 @@
+[project]
+name = "django_temporary_permissions"
+version = "0.1.0"
+description = "django-temporary-permissions"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+  {name = "K-Tech s.r.l.", email = "info@k-tech.it"}
+]
+maintainers = [
+  {name = "Giovanni Bronzini", email = "g.bronzini@gmail.com"},
+]
+license-files = ["LICEN[CS]E*"]
+classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 4 - Beta",
+
+    # Indicate who your project is intended for
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+
+    # Specify the Python versions you support here.
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django :: 5.2"
+]
+packages = [
+    { include = "django_temporary_permissions", from = "src" },
+]
+dependencies = [
+    "celery>=5.5.1",
+    "cryptography>=44.0.2",
+    "django-admin-extra-buttons>=2.1",
+    "django-celery-beat>=2.8.0",
+    "django-click>=2.4.1",
+    "django-constance>=4.3.2",
+    "django-cors-headers>=4.7.0",
+    "django-debug-toolbar>=5.1.0",
+    "django-extensions>=4.1",
+    "django-flags>=5.0.13",
+    "django-regex>=0.5.0",
+    "django-smart-admin[full]>=2.6.0",
+    "django-smart-env>=0.1.0",
+    "django-strategy-field>=3.1.0",
+    "django>=5.2",
+    "psycopg[binary]>=3.2.6",
+    "sentry-sdk>=2.26.1",
+]
+
+[dependency-groups]
+dev = [
+    "bumpversion>=0.6.0",
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "pytest-coverage>=0.0",
+    "pytest-django>=4.11.1",
+    "pytest-echo>=2.0",
+    "tox>=4.25.0",
+    "detect-secrets>=1.5.0",
+]
+image = [
+    "circus>=0.19.0",
+]
+
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"

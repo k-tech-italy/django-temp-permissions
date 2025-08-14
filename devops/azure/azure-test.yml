@@ -1,0 +1,79 @@
+# Azure Pipeline
+# Tests source code
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - 'develop'
+  paths:
+    exclude:
+      - docs/*
+      - '*.md'
+
+variables:
+- group: adp-test-variables
+- name: DATABASE_URL
+  value: postgres://postgres:test@localhost:5432/test
+
+resources:
+  containers:
+  - container: postgres
+    image: postgres:16
+    env:
+       POSTGRES_PASSWORD: test
+       POSTGRES_HOST_AUTH_METHOD: trust
+       PGDATA: /var/lib/postgresql/data
+    ports:
+       - 5432:5432/tcp
+
+services:
+  postgres: postgres
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+      versionSpec: '3.13'
+      architecture: 'x64'
+
+- script: |
+    mkdir -p /tmp/django_temporary_permissions/media/invites
+    mkdir -p /tmp/django_temporary_permissions/media/tmp
+    sudo apt-get install -y libssl-dev
+  displayName: 'Install os dependencies'
+
+
+- script: |
+    pip3 install --upgrade pip wheel poetry
+    poetry config virtualenvs.create false
+  displayName: 'sdist'
+
+- script: |
+    poetry install -vv
+  displayName: 'Install dependencies and package'
+
+- script: |
+    python -m py.test tests --create-db --junitxml=pytest.xml -vv \
+        --cov-report=xml --cov-report=html --cov-report=term \
+        --cov-config=tests/.coveragerc \
+        --cov=django_temporary_permissions
+  env:
+    DATABASE_URL: $(DATABASE_URL)
+  displayName: 'Run tests'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: "pytest.xml"
+    testResultsFormat: 'JUnit'
+    testRunTitle: 'Test with Python $(PYTHON_VERSION)'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/pytest.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/~build/coverage'
+    searchFolder: '$(system.defaultworkingdirectory)/tests'
