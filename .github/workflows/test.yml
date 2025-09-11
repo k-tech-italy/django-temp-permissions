@@ -28,17 +28,6 @@ jobs:
     outputs:
       run_tests: ${{steps.changes.outputs.run_tests }}
       lint: ${{steps.changes.outputs.lint }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.7
-      - id: changes
-        name: Check for file changes
-        uses: dorny/paths-filter@0bc4621a3135347011ad047f9ecf449bf72ce2bd # v3.0.0
-        with:
-          base: ${{ github.ref }}
-          token: ${{ github.token }}
-          filters: .github/file-filters.yml
-
   ci:
     runs-on: ubuntu-latest
     name: Test py${{ matrix.python-version }}/dj${{matrix.django-version}}
