@@ -17,21 +17,28 @@ permissions:
   id-token: write
   attestations: write
 
-
 jobs:
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    defaults:
-      run:
-        shell: bash
     outputs:
-      lint: ${{steps.changes.outputs.lint }}
+      lint: ${{ steps.changes.outputs.lint }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+      - name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            lint:
+              - 'src/**/*.py'
+              - '*.py'
+              - 'pyproject.toml'
+              - 'requirements*.txt'
+
   lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
     needs: [ changes ]
     if: needs.changes.outputs.lint
     steps:
@@ -43,10 +50,10 @@ jobs:
         with:
           python-version: 3.12
           architecture: 'x64'
-      - uses: yezz123/setup-uv@v4
+
       - uses: astral-sh/ruff-action@v3
+
       - name: lint
-        if: needs.changes.outputs.lint
         run: |
           ruff check --select I src
           ruff format --check src

@@ -17,23 +17,38 @@ permissions:
   id-token: write
   attestations: write
 
-
 jobs:
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    defaults:
-      run:
-        shell: bash
     outputs:
-      run_tests: ${{steps.changes.outputs.run_tests }}
-      lint: ${{steps.changes.outputs.lint }}
+      run_tests: ${{ steps.changes.outputs.run_tests }}
+      lint: ${{ steps.changes.outputs.lint }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+      - name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            run_tests:
+              - 'src/**/*.py'
+              - 'tests/**/*.py'
+              - '*.py'
+              - 'pyproject.toml'
+              - 'requirements*.txt'
+              - 'setup.py'
+              - 'setup.cfg'
+            lint:
+              - 'src/**/*.py'
+              - '*.py'
+              - 'pyproject.toml'
+              - 'requirements*.txt'
+
   ci:
     runs-on: ubuntu-latest
     name: Test py${{ matrix.python-version }}/dj${{matrix.django-version}}
-    defaults:
-      run:
-        shell: bash
     strategy:
       max-parallel: 1
       matrix:
@@ -48,7 +63,7 @@ jobs:
             django-version: '52'
       fail-fast: true
     needs: [ changes ]
-    if: needs.changes.outputs.run_tests || needs.changes.outputs.lint
+    if: needs.changes.outputs.run_tests == 'true' || needs.changes.outputs.lint == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
@@ -58,6 +73,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
+
       - name: Restore cached venv
         id: cache-venv-restore
         uses: actions/cache/restore@v4
@@ -78,7 +94,7 @@ jobs:
           key: ${{ matrix.python-version }}-${{matrix.django-version}}-venv
 
       - name: Test
-        if: needs.changes.outputs.run_tests
+        if: needs.changes.outputs.run_tests == 'true'
         run: |
           uv run --cache-dir .uv/ \
               pytest tests \
