@@ -34,7 +34,6 @@ jobs:
           - python-version: '3.8'
             django-version: '52'
       fail-fast: true
-    if: needs.changes.outputs.run_tests == 'true' || needs.changes.outputs.lint == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
@@ -65,7 +64,6 @@ jobs:
           key: ${{ matrix.python-version }}-${{matrix.django-version}}-venv
 
       - name: Test
-        if: needs.changes.outputs.run_tests == 'true'
         run: |
           uv run --cache-dir .uv/ \
               pytest tests \
