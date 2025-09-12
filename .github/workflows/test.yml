@@ -18,34 +18,6 @@ permissions:
   attestations: write
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    outputs:
-      run_tests: ${{ steps.changes.outputs.run_tests }}
-      lint: ${{ steps.changes.outputs.lint }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.7
-      - name: Check for changes
-        uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            run_tests:
-              - 'src/**/*.py'
-              - 'tests/**/*.py'
-              - '*.py'
-              - 'pyproject.toml'
-              - 'requirements*.txt'
-              - 'setup.py'
-              - 'setup.cfg'
-            lint:
-              - 'src/**/*.py'
-              - '*.py'
-              - 'pyproject.toml'
-              - 'requirements*.txt'
-
   ci:
     runs-on: ubuntu-latest
     name: Test py${{ matrix.python-version }}/dj${{matrix.django-version}}
@@ -62,7 +34,6 @@ jobs:
           - python-version: '3.8'
             django-version: '52'
       fail-fast: true
-    needs: [ changes ]
     if: needs.changes.outputs.run_tests == 'true' || needs.changes.outputs.lint == 'true'
     steps:
       - name: Checkout code
