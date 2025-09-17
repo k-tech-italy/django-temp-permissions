@@ -35,6 +35,7 @@ runs:
       shell: bash
 
     - name: Save vEnv
+      if: steps.cache-venv-restore.outputs.cache-hit != 'true'
       id: cache-venv-save
       uses: actions/cache/save@v4
       with:
