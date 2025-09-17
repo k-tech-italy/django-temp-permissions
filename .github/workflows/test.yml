@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
-        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        if: env.CODECOV_TOKEN
         continue-on-error: true
         with:
           env_vars: OS,PYTHON
