@@ -1,7 +1,7 @@
 """django-temporary-permissions app config."""
 
 from django.apps import AppConfig
-from typing import override
+from typing_extensions import override
 
 
 class Config(AppConfig):  # noqa D101

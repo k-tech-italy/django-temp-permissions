@@ -144,3 +144,4 @@ section-order = [
 "tests/demoapp/**/migrations/*.py" = ["ALL"]
 "src/django_temporary_permissions/version.py" = ["ALL"]
 "**/__init__.py" = ["D104"]
+"**/apps.py" = ["UP035"]
