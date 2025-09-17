@@ -3,7 +3,7 @@ name: Lint
 on:
   push:
     branches:
-      - '**'        # matches every branch
+      - '**'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}-lint"
@@ -18,17 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-          architecture: 'x64'
+      - name: Setup Python environment
+        uses: ./.github/actions/python-uv-setup
 
       - uses: astral-sh/ruff-action@v3
-
-      - name: lint
-        run: |
-          ruff check --select I src
-          ruff format --check src

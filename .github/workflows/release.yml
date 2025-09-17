@@ -8,19 +8,10 @@ on:
 
 jobs:
   build:
-    name: Build distribution 📦
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Set up Python (from pyproject.toml)
-        run: uv python install
-
-      - name: Install build backend
-        run: uv tool install build
+      - name: Setup Python environment
+        uses: ./.github/actions/python-uv-setup
 
       - name: Build a binary wheel and a source tarball
         run: python -m build

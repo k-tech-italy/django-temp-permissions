@@ -1,4 +1,4 @@
-target-version = "py38"
+target-version = "py13"
 line-length = 120
 
 [lint]
@@ -102,8 +102,7 @@ exclude = [
     "dist",
     "node_modules",
     "site-packages",
-    "venv",
-    "__init__.py"
+    "venv"
 ]
 
 [format]
@@ -144,3 +143,4 @@ section-order = [
 
 "tests/demoapp/**/migrations/*.py" = ["ALL"]
 "src/django_temporary_permissions/version.py" = ["ALL"]
+"**/__init__.py" = ["D100"]
