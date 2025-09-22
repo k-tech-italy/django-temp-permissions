@@ -34,7 +34,7 @@ repos:
     hooks:
       - id: detect-secrets
         args: [ '--baseline', '.secrets.baseline' ]
-        exclude: (tests/.*|.*/tenant\.sql|.*\.js|.gitlab-ci.yml|uv.lock)
+        exclude: (.*/tenant\.sql|.*\.js|.gitlab-ci.yml|uv.lock)
 
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit

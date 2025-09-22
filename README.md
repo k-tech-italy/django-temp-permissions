@@ -15,7 +15,7 @@ NOTE: Provide a more detailed description here.
 
 ## Dependencies
 
-* Python 3.9 or later
+* Python 3.10 or later
 * Django 4.2 or later
 
 
@@ -51,3 +51,5 @@ See the [contribution guide](CONTRIBUTING.md).
 ## Licensing
 
 All rights reserved.
+
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
