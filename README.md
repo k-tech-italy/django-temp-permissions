@@ -5,6 +5,9 @@
 [![Lint](https://github.com/k-tech-italy/django_temporary_permissions/actions/workflows/lint.yml/badge.svg)](https://github.com/k-tech-italy/django_temporary_permissions/actions/workflows/lint.yml)
 [![Documentation](https://github.com/k-tech-italy/django_temporary_permissions/actions/workflows/docs.yml/badge.svg)](https://github.com/k-tech-italy/django_temporary_permissions/actions/workflows/docs.yml)
 [![codecov](https://codecov.io/github/k-tech-italy/django_temporary_permissions/graph/badge.svg?token=BNXEW4JAYF)](https://codecov.io/github/k-tech-italy/django_temporary_permissions)
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+[![Pypi](https://badge.fury.io/py/django_temporary_permissions.svg)](https://badge.fury.io/py/django_temporary_permissions)
+[![coverage](https://codecov.io/github/k-tech-italy/django_temporary_permissions/coverage.svg?branch=develop)](https://codecov.io/github/k-tech-italy/django_temporary_permissions?branch=develop)
 -->
 
 
@@ -52,4 +55,3 @@ See the [contribution guide](CONTRIBUTING.md).
 
 All rights reserved.
 
-[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)

@@ -47,7 +47,7 @@ jobs:
         with:
           path: |
             .uv/
-          key: ${{ matrix.python-version }}-${{matrix.django-version}}-venv
+          key: ${{ github.ref_name }}-${{ matrix.python-version }}-${{matrix.django-version}}-venv
 
       - name: Cache venv
         if: steps.cache-venv-restore.outputs.cache-hit != 'true'
@@ -73,8 +73,8 @@ jobs:
         if: ${{ always() }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
         if: env.CODECOV_TOKEN
+        uses: codecov/codecov-action@v4
         continue-on-error: true
         with:
           env_vars: OS,PYTHON
@@ -83,4 +83,11 @@ jobs:
           files: ./coverage.xml
           verbose: false
           token: ${{ secrets.CODECOV_TOKEN }}
-          name: codecov-${{ env.GITHUB_REF_NAME }}
+          name: codecov-${{ github.ref_name }}
+
+      - name: Upload coverage to GitHub (fallback)
+        if: env.CODECOV_TOKEN
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ github.ref_name }}-${{ matrix.python-version }}-${{ matrix.django-version }}
+          path: coverage.xml
