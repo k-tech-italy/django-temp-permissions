@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -36,31 +38,39 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
 
-      - uses: astral-sh/setup-uv@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: latest
+          enable-cache: true
+          prune-cache: false
+          cache-local-path: ./uv-cache
 
-      - name: Install dependencies
-        run: uv sync --cache-dir .uv/ --frozen
-
-      - name: Restore cached venv
+      - name: Restore cached vEnv
         id: cache-venv-restore
         uses: actions/cache/restore@v4
         with:
           path: |
-            .uv/
-          key: ${{ github.ref_name }}-${{ matrix.python-version }}-${{matrix.django-version}}-venv
+            ./uv-cache
+            ./.venv
+          key: ${{ runner.os }}-py${{ matrix.python-version }}-dj${{ matrix.django-version }}-venv-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
 
-      - name: Cache venv
+      - name: Sync dependencies
+        run: uv sync --cache-dir ./uv-cache --frozen
+
+      - name: Save vEnv
         if: steps.cache-venv-restore.outputs.cache-hit != 'true'
         id: cache-venv-save
         uses: actions/cache/save@v4
         with:
           path: |
-            .uv
-          key: ${{ matrix.python-version }}-${{matrix.django-version}}-venv
+            ./uv-cache
+            ./.venv
+          key: ${{ steps.cache-venv-restore.outputs.cache-primary-key }}
 
       - name: Test
         run: |
-          uv run --cache-dir .uv/ \
+          uv run --cache-dir ./uv-cache \
               pytest tests \
                 --junit-xml junit-${{ matrix.python-version }}-${{matrix.django-version}}.xml \
                 --cov --cov-report xml
