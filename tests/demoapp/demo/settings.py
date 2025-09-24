@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure-7b411*t88@^8_py&b0p7x7x0)tykqxq8ysv+=y*8%#adhc@k-$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []  # noqa
+ALLOWED_HOSTS = []  # type: ignore[var-annotated]
 
 # Application definition
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_temporary_permissions",
+    "admin_extra_buttons",
+    "adminfilters",
 ]
 
 MIDDLEWARE = [
@@ -116,4 +119,4 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+PAST_PERMISSIONS_LENIENCE = timedelta(minutes=5)
