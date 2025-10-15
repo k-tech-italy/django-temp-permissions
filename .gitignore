@@ -1,7 +1,14 @@
 # All . files are potentially dangerous - by KT convention we exclude them all, and instead allow
 # certain files in a conscious manner
-.*
+**/.*/
+
+**/.db.sqlite
 ~*
+
+!.cz.toml
+!.pre-commit-config.yaml
+!.secrets.baseline
+!.mypy.ini
 
 # Potentially hold testing secrets
 *.private.env.json

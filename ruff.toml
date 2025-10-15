@@ -102,11 +102,12 @@ exclude = [
     "dist",
     "node_modules",
     "site-packages",
-    "venv"
+    "venv",
+    "**/migrations/**"
 ]
 
 [format]
-quote-style = "double"
+quote-style = "preserve"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
@@ -141,8 +142,7 @@ section-order = [
     "PT006",
 ]
 
-"tests/demoapp/**/migrations/*.py" = ["ALL"]
 "src/django_temporary_permissions/version.py" = ["ALL"]
 "**/__init__.py" = ["D104"]
 "**/apps.py" = ["UP035"]
-"**/migrations/**" = ["D100", "D101"]
+"**/migrations/**" = ["ALL"]

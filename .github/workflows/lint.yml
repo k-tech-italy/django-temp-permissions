@@ -25,5 +25,4 @@ jobs:
 
       - uses: astral-sh/ruff-action@v3
         with:
-          args: "format --check --diff"
           version-file: "pyproject.toml"
