@@ -17,7 +17,7 @@ jobs:
       - name: Setup Python environment
         uses: ./.github/actions/python-uv-setup
 
-      - name: Build a binary wheel and a source tarball
+      - name: Build package
         run: uv build
 
       - name: Store the distribution packages
@@ -31,11 +31,11 @@ jobs:
     needs: build
     if: contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha')
     runs-on: ubuntu-latest
-#    environment:
-#      name: testpypi
-#      url: https://test.pypi.org/p/django-temporary-permissions
-#    permissions:
-#      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/django-temporary-permissions
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4
@@ -53,11 +53,11 @@ jobs:
     needs: build
     if: "!contains(github.ref, '-rc') && !contains(github.ref, '-beta') && !contains(github.ref, '-alpha')"
     runs-on: ubuntu-latest
-#    environment:
-#      name: pypi
-#      url: https://pypi.org/p/django-temporary-permissions
-#    permissions:
-#      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    environment:
+      name: pypi
+      url: https://pypi.org/p/django-temporary-permissions
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4
@@ -67,6 +67,7 @@ jobs:
 
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
         with:
           username: __token__
           password: ${{ secrets.PYPI_TOKEN }}
