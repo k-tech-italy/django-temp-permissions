@@ -58,7 +58,7 @@ class TemporaryPermissionQuerySet(models.QuerySet):
             temporary_permissions__end_datetime__gt=now,
         ).distinct()
 
-    def with_perm(self, permission: Permission | str, content_type_app_label: str) -> QuerySet[User]:
+    def with_perm(self, permission: Permission | str, content_type_app_label: str = None) -> QuerySet[User]:
         """Query for users whose permission is currently active.
 
         Active means the current time (to the second) lies within

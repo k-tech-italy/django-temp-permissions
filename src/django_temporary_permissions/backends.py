@@ -1,15 +1,10 @@
 """Django temporary permission custom backend."""
-
+from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import BaseBackend
 
 from django_temporary_permissions.models import TemporaryPermission
 
-import typing
-
-if typing.TYPE_CHECKING:
-    from django.contrib.auth import get_user_model
-
-    User = get_user_model()
+User = get_user_model()
 
 
 class TemporaryPermissionBackend(BaseBackend):
