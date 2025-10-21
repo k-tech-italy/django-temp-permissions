@@ -58,8 +58,8 @@ class TemporaryPermissionQuerySet(models.QuerySet):
             temporary_permissions__end_datetime__gt=now,
         ).distinct()
 
-    def with_perm(self, permission: Permission) -> QuerySet[User]:
-        """Query for users whose permissions are currently active.
+    def with_perm(self, permission: Permission | str, content_type_app_label: str = None) -> QuerySet[User]:
+        """Query for users whose permission is currently active.
 
         Active means the current time (to the second) lies within
         the start and end datetime specified within the TemporaryPermission
@@ -67,11 +67,15 @@ class TemporaryPermissionQuerySet(models.QuerySet):
 
         Args:
             permission: The Django permission being granted temporarily.
+            content_type_app_label: The Django content type app label.
 
         Returns:
             A QuerySet of user(s).
 
         """
+        if isinstance(permission, str):
+            permission = Permission.objects.get(content_type__app_label=content_type_app_label, codename=permission)
+
         now = timezone.now()
         return User.objects.filter(
             temporary_permissions__permissions=permission,

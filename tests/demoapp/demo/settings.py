@@ -120,3 +120,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 PAST_PERMISSIONS_LENIENCE = timedelta(minutes=5)
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_temporary_permissions.backends.TemporaryPermissionBackend',
+]

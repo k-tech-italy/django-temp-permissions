@@ -2,8 +2,8 @@ name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
 
 on:
   push:
-    tags:
-      - '*'  # Trigger on any tag push
+    branches:
+      - 'main'
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
