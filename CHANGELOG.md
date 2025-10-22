@@ -14,6 +14,21 @@
 
 - added default value to with_perm manager
 
+## 0.3.0 (2025-10-22)
+
+### Fix
+
+- remove the username and password config from releases
+- release pipeline
+- release pipeline project url
+
+### Refactor
+
+- **whole-repo**: project name change
+- **whole-repo**: change the name from django_temporary_permissions to django_temp_permissions
+
+## v1.0.0 (2025-10-21)
+
 ## 0.2.0 (2025-10-22)
 
 ### Fix
