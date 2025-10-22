@@ -1,7 +1,7 @@
 [run]
 branch = True
 source = src
-source_pkgs = django_temporary_permissions
+source_pkgs = django_temp_permissions
 relative_files = True
 # partial_branches =
 omit =

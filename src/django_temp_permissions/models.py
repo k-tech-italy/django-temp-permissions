@@ -1,4 +1,4 @@
-"""Models for django-temporary-permissions.
+"""Models for django-temp-permissions.
 
 This module provides models for managing temporary permissions in Django,
 allowing administrators to grant time-limited permissions to users.
@@ -12,7 +12,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
-from django_temporary_permissions.validators import validate_date_not_in_past
+from django_temp_permissions.validators import validate_date_not_in_past
 
 User = get_user_model()  # noqa
 
@@ -58,7 +58,7 @@ class TemporaryPermissionQuerySet(models.QuerySet):
             temporary_permissions__end_datetime__gt=now,
         ).distinct()
 
-    def with_perm(self, permission: Permission | str, content_type_app_label: str = None) -> QuerySet[User]:
+    def with_perm(self, permission: Permission | str, content_type_app_label: str | None = None) -> QuerySet[User]:
         """Query for users whose permission is currently active.
 
         Active means the current time (to the second) lies within

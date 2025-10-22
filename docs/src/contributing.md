@@ -2,7 +2,7 @@
 
 ## Using the issue tracker
 
-You can suggest features, enhancements, or report bugs on our [issue tracker](https://github.com/k-tech-italy/django_temporary_permissions/issues).
+You can suggest features, enhancements, or report bugs on our [issue tracker](https://github.com/k-tech-italy/django-temp-permissions/issues).
 
 You can also use the issue tracker to find an open issue for you to work on. Please mention in the issue that you are working on it.
 
@@ -16,10 +16,10 @@ To start working on this project:
 * Clone the repository:
     ```bash
     # using HTTPS
-    git clone https://github.com/k-tech-italy/django_temporary_permissions.git
+    git clone https://github.com/k-tech-italy/django-temp-permissions.git
 
     # using SSH
-    git clone git@github.com:k-tech-italy/django_temporary_permissions.git
+    git clone git@github.com:k-tech-italy/django-temp-permissions.git
     ```
 * If you use [direnv](https://direnv.net/), copy the `.envrc.example` file as follows, otherwise skip this step:
     ```bash

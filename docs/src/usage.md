@@ -2,7 +2,7 @@
 title: Getting started
 ---
 
-# How to use django-temporary-permissions
+# How to use django-temp-permissions
 
 ## Configuration
 

@@ -1,4 +1,4 @@
-"""Signals for django_temporary_permissions."""
+"""Signals for django_temp_permissions."""
 
 import django.dispatch
 

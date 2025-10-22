@@ -1,4 +1,4 @@
-"""django_temporary_permissions model validators."""
+"""django_temp_permissions model validators."""
 
 from datetime import datetime, timedelta
 

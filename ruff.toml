@@ -142,7 +142,7 @@ section-order = [
     "PT006",
 ]
 
-"src/django_temporary_permissions/version.py" = ["ALL"]
+"src/django_temp_permissions/version.py" = ["ALL"]
 "**/__init__.py" = ["D104"]
 "**/apps.py" = ["UP035"]
 "**/migrations/**" = ["ALL"]

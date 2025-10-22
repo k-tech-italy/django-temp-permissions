@@ -2,7 +2,7 @@ from datetime import timedelta
 
 import pytest
 
-from django_temporary_permissions.models import TemporaryPermission
+from django_temp_permissions.models import TemporaryPermission
 from test_utils.factories import PermissionFactory, UserFactory, TemporaryPermissionFactory
 
 

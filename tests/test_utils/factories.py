@@ -6,7 +6,7 @@ from factory.django import DjangoModelFactory
 from django.utils import timezone
 from datetime import timedelta
 
-from django_temporary_permissions.models import TemporaryPermission
+from django_temp_permissions.models import TemporaryPermission
 
 
 class UserFactory(DjangoModelFactory):

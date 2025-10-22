@@ -5,7 +5,7 @@ from django.utils import timezone
 import pytest
 from django.core.exceptions import ValidationError
 
-from django_temporary_permissions.validators import validate_date_not_in_past
+from django_temp_permissions.validators import validate_date_not_in_past
 from test_utils.factories import TemporaryPermissionFactory
 
 

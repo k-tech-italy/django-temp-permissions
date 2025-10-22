@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_temporary_permissions",
+    "django_temp_permissions",
     "admin_extra_buttons",
     "adminfilters",
 ]
@@ -123,5 +123,5 @@ PAST_PERMISSIONS_LENIENCE = timedelta(minutes=5)
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'django_temporary_permissions.backends.TemporaryPermissionBackend',
+    'django_temp_permissions.backends.TemporaryPermissionBackend',
 ]

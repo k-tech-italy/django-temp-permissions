@@ -2,7 +2,7 @@
 title: Documentation
 ---
 
-django-temporary-permissions is a Django app.
+django-temp-permissions is a Django app.
 
 TODO: Provide a more detailed description here.
 
@@ -15,16 +15,16 @@ TODO: Provide a more detailed description here.
 
 ## Installation
 
-* Install django_temporary_permissions using your package manager of choice, e.g. Pip:
+* Install django-temp-permissions using your package manager of choice, e.g. Pip:
   ```bash
-  pip install django_temporary_permissions
+  pip install django-temp-permissions
   ```
 
-* Add `django_temporary_permissions` to `INSTALLED_APPS` in your `config/settings.py` file:
+* Add `django-temp-permissions` to `INSTALLED_APPS` in your `config/settings.py` file:
   ```python
   INSTALLED_APPS = (
       ...
-      "django_temporary_permissions",
+      "django-temp-permissions",
       ...
   )
   ```
@@ -36,7 +36,7 @@ TODO: Provide a more detailed description here.
 
 ## Bug reports and requests for enhancements
 
-Please open an issue on the project's [issue tracker on GitHub](https://github.com/k-tech-italy/django_temporary_permissions/issues).
+Please open an issue on the project's [issue tracker on GitHub](https://github.com/k-tech-italy/django-temp-permissions/issues).
 
 ## Contributing to the project
 
