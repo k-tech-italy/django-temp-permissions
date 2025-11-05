@@ -1,12 +1,17 @@
 # django-temp-permissions
 
-<!--
+[![PyPI version](https://badge.fury.io/py/django-temp-permissions.svg)](https://badge.fury.io/py/django-temp-permissions)
+[![GitHub version](https://badge.fury.io/gh/k-tech-italy%2Fdjango-temp-permissions.svg)](https://badge.fury.io/gh/k-tech-italy%2Fdjango-temp-permissions)
 [![Test](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/test.yml/badge.svg)](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/test.yml)
 [![Lint](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/lint.yml/badge.svg)](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/lint.yml)
 [![Documentation](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/docs.yml/badge.svg)](https://github.com/k-tech-italy/django-temp-permissions/actions/workflows/docs.yml)
-[![codecov](https://codecov.io/github/k-tech-italy/django-temp-permissions/graph/badge.svg?token=BNXEW4JAYF)](https://codecov.io/github/k-tech-italy/django-temp-permissions)
+<!-- [![Docs](https://readthedocs.org/projects/django-concurrency/badge/?version=stable)](http://django-concurrency.readthedocs.io/en/stable/) -->
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
-[![Pypi](https://badge.fury.io/py/django-temp-permissions.svg)](https://badge.fury.io/py/django-temp-permissions)
+[![Django](https://img.shields.io/pypi/frameworkversions/django/django-temp-permissions?label=django-versions)](https://pypi.org/project/django-temp-permissions/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/django-temp-permissions.svg)](https://pypi.org/project/django-concurrency/)
+
+<!--
+[![codecov](https://codecov.io/github/k-tech-italy/django-temp-permissions/graph/badge.svg?token=BNXEW4JAYF)](https://codecov.io/github/k-tech-italy/django-temp-permissions)
 [![coverage](https://codecov.io/github/k-tech-italy/django-temp-permissions/coverage.svg?branch=develop)](https://codecov.io/github/k-tech-italy/django-temp-permissions?branch=develop)
 -->
 
@@ -33,7 +38,7 @@ NOTE: Provide a more detailed description here.
   ```python
   INSTALLED_APPS = (
       ...
-      "django-temp-permissions",
+      "django_temp_permissions",
       ...
   )
   ```

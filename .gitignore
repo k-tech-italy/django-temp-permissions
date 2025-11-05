@@ -9,6 +9,8 @@
 !.pre-commit-config.yaml
 !.secrets.baseline
 !.mypy.ini
+!**/.gitignore
+!**/.*.example
 
 # Potentially hold testing secrets
 *.private.env.json
