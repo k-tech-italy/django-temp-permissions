@@ -1,3 +1,15 @@
+## 0.3.1 (2025-11-06)
+
+### Fix
+
+- **Fixed-documenatation**: Fixed wrong min Python version
+
+## 0.3.1 (2025-11-06)
+
+### Fix
+
+- **Repository**: Fixing README.md .gitignore and adding badges
+
 ## 0.3.0 (2025-10-22)
 
 ### Feat
