@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from factory import SubFactory, Faker, Sequence, LazyFunction, post_generation
+from factory import SubFactory, Faker, Sequence, LazyFunction, post_generation, PostGenerationMethodCall
 from factory.django import DjangoModelFactory
 from django.utils import timezone
 from datetime import timedelta
@@ -11,9 +11,12 @@ from django_temp_permissions.models import TemporaryPermission
 
 class UserFactory(DjangoModelFactory):
     username = Sequence(lambda n: f"test_user_{n}")
+    email = Sequence(lambda n: f"test_user_{n}@nomail.com")
+    password = PostGenerationMethodCall("set_password", "testpassword123")
 
     class Meta:
         model = get_user_model()
+        django_get_or_create = ("username",)
 
 
 class PermissionFactory(DjangoModelFactory):

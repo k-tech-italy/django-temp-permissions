@@ -9,7 +9,7 @@ TODO: Provide a more detailed description here.
 
 ## Dependencies
 
-* Python 3.9 or later
+* Python 3.10 or later
 * Django 4.2 or any later version supporting your Python version of choice.
 
 

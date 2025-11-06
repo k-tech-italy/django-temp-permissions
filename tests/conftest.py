@@ -2,7 +2,13 @@ from datetime import timedelta
 
 import pytest
 from django.utils import timezone
-from test_utils.factories import TemporaryPermissionFactory
+
+from test_utils.factories import TemporaryPermissionFactory, UserFactory
+
+
+@pytest.fixture
+def staff_user():
+    return UserFactory(is_staff=True)
 
 
 @pytest.fixture
