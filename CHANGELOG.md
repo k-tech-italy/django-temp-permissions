@@ -1,3 +1,9 @@
+## 0.4.0 (2025-11-07)
+
+### Feat
+
+- **Admin**: Extra admin dependencies now extra
+
 ## 0.3.2 (2025-11-07)
 
 ### Fix
