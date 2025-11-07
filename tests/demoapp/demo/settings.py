@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django_temp_permissions",
     "admin_extra_buttons",
     "adminfilters",
+    "demo",
 ]
 
 MIDDLEWARE = [
@@ -85,8 +86,7 @@ SECURE_SSL_REDIRECT = False
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS : list[dict] = [
-]
+AUTH_PASSWORD_VALIDATORS: list[dict] = []
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

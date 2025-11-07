@@ -5,8 +5,7 @@ import os
 import pathlib
 import sys
 
-SRC_DIR = pathlib.Path(__file__).parent.parent.parent / "src"
-sys.path.insert(0, str(SRC_DIR.absolute()))
+ROOT_DIR = pathlib.Path(__file__).parent
 
 
 def main():
@@ -24,4 +23,7 @@ def main():
 
 
 if __name__ == "__main__":
+    sys.path.insert(0, str(ROOT_DIR / "src"))
+    sys.path.insert(1, str(ROOT_DIR / "tests/_extras"))
+    sys.path.insert(2, str(ROOT_DIR / "tests/demoapp"))
     main()

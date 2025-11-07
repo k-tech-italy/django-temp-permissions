@@ -34,7 +34,19 @@ NOTE: Provide a more detailed description here.
   pip install django-temp-permissions
   ```
 
-* Add django-temp-permissions to `INSTALLED_APPS` in your `config/settings.py` file:
+  and add the authentication backend in the settings:
+  ```python
+    AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'django_temp_permissions.backends.TemporaryPermissionBackend',
+    ]
+  ```
+
+* If you want to use the extra admin features (django-admin-extra-buttons,django-adminfilters):
+  ```bash
+  pip install django-temp-permissions[extra-admin]
+  ```
+and add django-temp-permissions to `INSTALLED_APPS` in your `config/settings.py` file:
   ```python
   INSTALLED_APPS = (
       ...
