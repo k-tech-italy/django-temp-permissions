@@ -25,7 +25,7 @@ def test_backend_temp_user_permission(staff_user, change_user_perm, client):
     # Verify temporary permission backend provides the permission
     response = client.get(user_view_url)
     assert response.status_code == 200, "Temporary Permission Backend provides permission, allow."
-    assert staff_user.username in response.text
+    assert staff_user.username in response.content.decode('utf-8')
 
 
 @pytest.mark.django_db

@@ -1,17 +1,24 @@
 """Django temporary permission custom backend."""
 
-from django.contrib.auth import get_user_model
+from __future__ import annotations
+import typing
+
 from django.contrib.auth.backends import BaseBackend
 
 from django_temp_permissions.models import TemporaryPermission
 
-User = get_user_model()
+
+if typing.TYPE_CHECKING:
+    from django.contrib.auth import get_user_model
+    from django.db.models import Model
+
+    User = get_user_model()
 
 
 class TemporaryPermissionBackend(BaseBackend):
     """Custom permission backend for temporary permissions support."""
 
-    def get_user_permissions(self, user_obj: User, obj: str | None = None) -> set:
+    def get_user_permissions(self, user_obj: User, obj: Model | None = None) -> set:
         """Append the temporary permissions to the list of permissions."""
         if not user_obj.is_active or user_obj.is_anonymous or obj is not None:
             return set()

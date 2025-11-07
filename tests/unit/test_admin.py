@@ -41,7 +41,7 @@ def test_check_overlaps_detected_button(admin_client, monkeypatch):
 
     assert len(actual_messages) == 1, "only 1 message should be returned"
     assert actual_messages[0].level == messages.WARNING, "check message type"
-    assert expected_message in response.text, "message must be displayed in the page"
+    assert expected_message in response.content.decode('utf-8'), "message must be displayed in the page"
 
     # Check signal is being sent
     assert mock.call_count == 1
@@ -86,7 +86,7 @@ def test_check_overlaps_add_view(admin_client, monkeypatch):
         f'<a href="{change_url}" '
         f'target="_blank"> User Temporary Permission ID {temp_perm_1.id}</a>'
     )
-    assert expected_message in response.text, "Warning message must be displayed on the page"
+    assert expected_message in response.content.decode('utf-8'), "Warning message must be displayed on the page"
 
     assert mock.call_count == 1
     assert mock.call_args.kwargs.get("sender") == TemporaryPermissionAdmin
@@ -130,7 +130,7 @@ def test_check_overlaps_change_view(admin_client, monkeypatch):
         f'<a href="{change_url}" '
         f'target="_blank"> User Temporary Permission ID {temp_perm_1.id}</a>'
     )
-    assert expected_message in response.text, "Warning message must be displayed on the page"
+    assert expected_message in response.content.decode('utf-8'), "Warning message must be displayed on the page"
 
     assert mock.call_count == 1
     assert mock.call_args.kwargs.get("sender") == TemporaryPermissionAdmin
@@ -151,4 +151,6 @@ def test_configure_temporary_permission_button(admin_client):
     assert redirect_url == f"{reverse('admin:django_temp_permissions_temporarypermission_add')}?user={user.id}"
 
     redirect_response = admin_client.get(redirect_url)
-    assert f'<option value="2" selected>{user.username}</option>' in redirect_response.text, "user should be pre-filled"
+    assert f'<option value="2" selected>{user.username}</option>' in redirect_response.content.decode('utf-8'), (
+        "user should be pre-filled"
+    )
